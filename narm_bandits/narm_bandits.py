@@ -14,8 +14,6 @@ class NarmBandits:
             pass
 
 
-
-
 if __name__=='__main__':
     bandit_1 = GreedyBandit(reward=5)
     bandit_2 = [1,5,3,6]
