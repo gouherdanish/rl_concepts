@@ -1,25 +1,33 @@
 import numpy as np
 
-from bandit import GreedyBandit
-from reward.reward_distribution import ConstantRewardDistribution, RandomRewardDistribution, NormalRewardDistribution
+from agent import Agent
+from setup import Setup
 
 class NarmBandits:
-    def __init__(self,*slots,**params) -> None:
-        self.slots = slots
-        self.n = len(self.slots)
-        self.epsilon = params['epsilon']
+    def __init__(self,agent,bandits) -> None:
+        self.agent = agent
+        self.bandits = bandits
 
-    def run(episodes):
+    def run(self,episodes):
         for episode in range(episodes):
-            pass
+            print(f"Episode {episode} started...")
+            action = self.agent.select_action()
+            print(f"Action selected: {action}")
+            bandit = self.bandits[action]
+            print(f"Bandit selected: {bandit}")
+            reward = bandit.pull_arm()
+            agent.update_estimates(action,reward)
 
 
 if __name__=='__main__':
-    bandit_1 = GreedyBandit(reward=5)
-    bandit_2 = [1,5,3,6]
-    bandit_3 = np.random.normal(loc=3,scale=1)
-    epsilon = 0.1
+    epsilon = 0
     episodes = 10
 
-    rl = NarmBandits(slot1,slot2,slot3,epsilon=epsilon)
+    setup = Setup()
+    print(setup)
+
+    agent = Agent(epsilon=epsilon)
+    print(agent)
+
+    rl = NarmBandits(agent,setup.bandits)
     rl.run(episodes=episodes)
