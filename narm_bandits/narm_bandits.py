@@ -1,5 +1,8 @@
 import numpy as np
 
+from bandit import GreedyBandit
+from reward.reward_distribution import ConstantRewardDistribution, RandomRewardDistribution, NormalRewardDistribution
+
 class NarmBandits:
     def __init__(self,*slots,**params) -> None:
         self.slots = slots
@@ -11,10 +14,12 @@ class NarmBandits:
             pass
 
 
+
+
 if __name__=='__main__':
-    slot1 = [5]
-    slot2 = [1,5,3,6]
-    slot3 = np.random.normal(loc=3,scale=1)
+    bandit_1 = GreedyBandit(reward=5)
+    bandit_2 = [1,5,3,6]
+    bandit_3 = np.random.normal(loc=3,scale=1)
     epsilon = 0.1
     episodes = 10
 
