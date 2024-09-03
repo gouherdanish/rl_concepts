@@ -9,7 +9,7 @@ class RewardFactory:
     @classmethod
     def register(cls,type):
         def inner(wrapped_cls):
-            cls.registry = wrapped_cls
+            cls.registry[type] = wrapped_cls
             return wrapped_cls
         return inner
     

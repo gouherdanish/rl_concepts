@@ -10,12 +10,14 @@ class Agent:
         self.qarr = [QValue() for _ in range(n_actions)]
 
     def __str__(self) -> str:
-        return f'Agent(epsilon={self.epsilon},Q={self.qarr})'
+        return f'Agent(epsilon={self.epsilon},q-values={self.qarr})'
 
     def select_action(self):
         if np.random.random() < self.epsilon:
-            np.random.choice(self.n_actions)
+            print('Agent is Exploring...')
+            return np.random.choice(self.n_actions)
         else:
+            print('Agent is Exploiting...')
             self.qvalues = np.array([q.Qk for q in self.qarr])
             return np.argmax(self.qvalues)
 

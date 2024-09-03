@@ -3,31 +3,39 @@ import numpy as np
 from agent import Agent
 from setup import Setup
 
-class NarmBandits:
+class NarmBanditsPlayGround:
     def __init__(self,agent,bandits) -> None:
         self.agent = agent
         self.bandits = bandits
+        self.total_rewards = 0
+        self.rewards = []
 
     def run(self,episodes):
-        for episode in range(episodes):
-            print(f"Episode {episode} started...")
+        for _ in range(episodes):
             action = self.agent.select_action()
-            print(f"Action selected: {action}")
             bandit = self.bandits[action]
-            print(f"Bandit selected: {bandit}")
             reward = bandit.pull_arm()
             agent.update_estimates(action,reward)
+            self.update(reward=reward)
+
+    def update(self,reward):
+        self.rewards.append(reward)
+        self.total_rewards += reward.value
 
 
 if __name__=='__main__':
-    epsilon = 0
-    episodes = 10
+    epsilon = 0.1
+    episodes = 100
 
     setup = Setup()
-    print(setup)
+    bandits = setup.bandits
+    print(bandits)
 
-    agent = Agent(epsilon=epsilon)
+    agent = Agent(epsilon=epsilon,n_actions=len(bandits))
     print(agent)
 
-    rl = NarmBandits(agent,setup.bandits)
-    rl.run(episodes=episodes)
+    env = NarmBanditsPlayGround(agent=agent,bandits=bandits)
+    env.run(episodes=episodes)
+    print(env.agent)
+    print(env.rewards)
+    print(env.total_rewards)
