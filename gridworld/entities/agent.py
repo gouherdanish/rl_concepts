@@ -1,24 +1,25 @@
 import numpy as np
 
-from constants import Actions, Params
+from constants import Actions
+from entities import QValue
 
 class Agent:
-    def __init__(
-            self,
-            states,
-            epsilon,
-            alpha,
-            gamma) -> None:
-        self.epsilon = epsilon
-        self.alpha = alpha
-        self.gamma = gamma
-        self.estimates = {(state,action):0 for state in states for action in Actions}
+    def __init__(self,states,params):
+        self.params = params
+        self.estimates = [QValue(state,action,params) for state in states for action in list(Actions)]
 
     def select_action(self,state):
         """
         selects action based on epsilon-greedy policy
         """
-        if np.random.uniform() < self.epsilon:
+        if np.random.uniform() < self.params.epsilon:
             return np.random.choice(list(Actions))
         else:
-            return Actions
+            qvalues = [qval for qval in self.estimates if qval.state == state]
+            return max(qvalues,key=lambda q: q.Q).action
+        
+    def update_estimates(self,state,action,reward,next_state,next_action):
+        qi = [q.Q for q in self.estimates if q.state == state and q.action == action][0]
+        qi_next = [q.Q for q in self.estimates if q.state == next_state and q.action == next_action][0]
+
+        qi += self.params.alpha * (reward.value + self.params.gamma * qi_next - qi)
