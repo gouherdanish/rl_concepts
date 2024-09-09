@@ -1,16 +1,13 @@
 from entities.agent import Agent
 from entities.env import GridWorld
 from entities.setup import Setup
-from constants import Constants
+from constants import Params
 
 if __name__=='__main__':
-
-    setup = Setup()
+    env = GridWorld()
     agent = Agent(
-        epsilon=Constants.epsilon,
-        alpha=Constants.alpha,
-        gamma=Constants.gamma    
-    )
-    env = GridWorld(
-        
+        states=env.states,
+        epsilon=Params.EPSILON,
+        alpha=Params.ALPHA,
+        gamma=Params.GAMMA    
     )
