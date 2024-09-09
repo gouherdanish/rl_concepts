@@ -2,6 +2,7 @@ from entities.agent import Agent
 from entities.agent_params import AgentParams
 from entities.env import GridWorld
 from entities.setup import Setup
+from entities.game import Game
 
 from constants import Params
 
@@ -16,4 +17,9 @@ if __name__=='__main__':
     agent = Agent(
         states=env.states, 
         params=agent_params 
+    )
+
+    game = Game(
+        agent=agent,
+        env=env
     )

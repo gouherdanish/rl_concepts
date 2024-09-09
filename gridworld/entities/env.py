@@ -1,8 +1,11 @@
-from constants import Params
+from abc import ABC, abstractmethod
+
+from constants import Params, Actions
 from entities.grid import Grid
 from entities.state import State
 
-class GridWorld:
+
+class Env(ABC):
     def __init__(self) -> None:
         self.grid = Grid(size=Params.GRID_SIZE)
         self.states = [State(row,col) for row in self.grid.rows for col in self.grid.cols]
@@ -10,4 +13,13 @@ class GridWorld:
         self.goal_state = State(Params.GRID_SIZE-1,Params.GRID_SIZE-1)
 
     def reset(self):
-        self.current_state = State(0,0)
+        return State(0,0)
+
+    @abstractmethod
+    def step(self):
+        pass
+
+class GridWorld(Env):
+
+    def step(self,state,action):
+        next_state = State()

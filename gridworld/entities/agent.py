@@ -2,6 +2,7 @@ import numpy as np
 
 from constants import Actions
 from entities import QValue
+from factory.action_factory import ActionSelectionFactory
 
 class Agent:
     def __init__(self,states,params):
@@ -13,10 +14,11 @@ class Agent:
         selects action based on epsilon-greedy policy
         """
         if np.random.uniform() < self.params.epsilon:
-            return np.random.choice(list(Actions))
+            action = np.random.choice(list(Actions))
         else:
             qvalues = [qval for qval in self.estimates if qval.state == state]
-            return max(qvalues,key=lambda q: q.Q).action
+            action = max(qvalues,key=lambda q: q.Q).action
+        return ActionSelectionFactory.get(action)
         
     def update_estimates(self,state,action,reward,next_state,next_action):
         qi = [q for q in self.estimates if q.state == state and q.action == action][0]
