@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABC
 import numpy as np
 
-from constants import Actions, Params
+from constants import Actions, EnvParams
 from entities.state import State
 
 class ActionSelectionFactory:
@@ -20,7 +20,7 @@ class ActionSelectionFactory:
 
 class ActionSelection(ABC):
     def __init__(self) -> None:
-        self.step_size = Params.STEP_SIZE
+        self.step_size = EnvParams.STEP_SIZE
 
     @abstractmethod
     def step_from(self):
@@ -50,7 +50,7 @@ class DownActionSelection(ActionSelection):
         return str(self)
 
     def step_from(self,state):
-        next_row = min(state.row+1,Params.GRID_SIZE-1)
+        next_row = min(state.row+1,EnvParams.GRID_SIZE-1)
         next_col = state.col
         return State(next_row,next_col)
     
@@ -78,6 +78,6 @@ class RightActionSelection(ActionSelection):
         return str(self)
 
     def step_from(self,state):
-        next_col = min(state.col+1,Params.GRID_SIZE-1)
+        next_col = min(state.col+1,EnvParams.GRID_SIZE-1)
         next_row = state.row
         return State(next_row,next_col)

@@ -1,25 +1,20 @@
 from entities.agent import Agent
 from entities.agent_params import AgentParams
 from entities.env import GridWorld
-from entities.setup import Setup
 from entities.game import Game
 
-from constants import Params
+from constants import AgentParams
 
 if __name__=='__main__':
     env = GridWorld()
 
-    agent_params = AgentParams(
-        epsilon=Params.EPSILON,
-        alpha=Params.ALPHA,
-        gamma=Params.GAMMA)
-    
     agent = Agent(
         states=env.states, 
-        params=agent_params 
+        params=AgentParams() 
     )
 
     game = Game(
         agent=agent,
         env=env
     )
+    game.run(episodes=1)
