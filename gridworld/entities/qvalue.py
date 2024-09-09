@@ -4,6 +4,3 @@ class QValue:
         self.action = action
         self.params = params
         self.value = 0
-
-    def update(self,reward):
-        self.Q += self.params.alpha * (reward.value + self.params.gamma *  - self.Q)
