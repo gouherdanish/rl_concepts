@@ -1,4 +1,4 @@
 class State:
-    def __init__(self, x=None, y=None) -> None:
-        self.x = x
-        self.y = y
+    def __init__(self, row=None, col=None) -> None:
+        self.row = row
+        self.col = col

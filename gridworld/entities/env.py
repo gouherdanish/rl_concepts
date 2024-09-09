@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from constants import Params, Actions
 from entities.grid import Grid
 from entities.state import State
+from factory.action_factory import ActionSelectionFactory
 
 
 class Env(ABC):
@@ -22,4 +23,8 @@ class Env(ABC):
 class GridWorld(Env):
 
     def step(self,state,action):
-        next_state = State()
+        action_selector = ActionSelectionFactory.get()
+        next_state = action_selector.step_from(state)
+        reward = 1 if next_state == self.goal_state else 0
+        done = True if next_state == self.goal_state else False
+        return next_state, reward, done

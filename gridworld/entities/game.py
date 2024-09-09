@@ -10,3 +10,9 @@ class Game:
         for episode in range(episodes):
             state = self.env.reset()
             action = self.agent.select_action(state)
+            done = False
+            while not done:
+                next_state, reward, done = self.env.step(state,action)
+                next_action = self.agent.select_action(next_state)
+                sarsa = (state,action,reward,next_state,next_action)
+                self.agent.update_estimates(**sarsa)

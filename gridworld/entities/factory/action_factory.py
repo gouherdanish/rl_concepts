@@ -1,7 +1,8 @@
 from abc import abstractmethod, ABC
 import numpy as np
 
-from constants import Actions
+from constants import Actions, Params
+from entities.state import State
 
 class ActionSelectionFactory:
     registry = {}
@@ -18,47 +19,65 @@ class ActionSelectionFactory:
         return cls.registry[type](**kwargs)
 
 class ActionSelection(ABC):
+    def __init__(self) -> None:
+        self.step_size = Params.STEP_SIZE
+
     @abstractmethod
-    def _select_action(self):
+    def step_from(self):
         pass
-
-    def select_Action(self):
-        Action = self._select_action()
-        return Action(value=Action)
     
-@ActionSelectionFactory.register(Actions.UP.value)
+@ActionSelectionFactory.register(Actions.UP)
 class UpActionSelection(ActionSelection):
+
     def __str__(self) -> str:
-        return f'UpActionSelection({self.action_dist})'
+        return f'UpActionSelection({self.step_size})'
     
     def __repr__(self) -> str:
         return str(self)
 
-    def step(self,state):
-        return self.action_dist[0]
+    def step_from(self,state):
+        next_row = max(state.row-1,0)
+        next_col = state.col
+        return State(next_row,next_col)
 
-@ActionSelectionFactory.register(Actions.UP.value)
+@ActionSelectionFactory.register(Actions.DOWN)
 class DownActionSelection(ActionSelection):
-    def __str__(self) -> str:
-        return f'DownActionSelection({self.action_dist})'
-    
-    def __repr__(self) -> str:
-        return str(self)
-    
-    def step(self):
-        return np.random.choice(self.action_dist)
-    
-@ActionSelectionFactory.register('normal')
-class NormalActionSelection(ActionSelection):
-    def __init__(self, mean=0, std=1) -> None:
-        self.mean = mean
-        self.std = std
 
     def __str__(self) -> str:
-        return f'NormalActionSelection({self.mean},{self.std})'
+        return f'DownActionSelection({self.step_size})'
     
     def __repr__(self) -> str:
         return str(self)
+
+    def step_from(self,state):
+        next_row = min(state.row+1,Params.GRID_SIZE-1)
+        next_col = state.col
+        return State(next_row,next_col)
     
-    def _select_action(self):
-        return np.random.normal(loc=self.mean,scale=self.std)
+@ActionSelectionFactory.register(Actions.LEFT)
+class LeftActionSelection(ActionSelection):
+
+    def __str__(self) -> str:
+        return f'LeftActionSelection({self.step_size})'
+    
+    def __repr__(self) -> str:
+        return str(self)
+
+    def step_from(self,state):
+        next_col = max(state.col-1,0)
+        next_row = state.row
+        return State(next_row,next_col)
+    
+@ActionSelectionFactory.register(Actions.RIGHT)
+class RightActionSelection(ActionSelection):
+
+    def __str__(self) -> str:
+        return f'RightActionSelection({self.step_size})'
+    
+    def __repr__(self) -> str:
+        return str(self)
+
+    def step_from(self,state):
+        next_col = min(state.col+1,Params.GRID_SIZE-1)
+        next_row = state.row
+        return State(next_row,next_col)
