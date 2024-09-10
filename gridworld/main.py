@@ -12,4 +12,4 @@ if __name__=='__main__':
     print(agent)
 
     game = Game(agent=agent,env=env)
-    game.run(episodes=1)
+    game.run(episodes=5)
