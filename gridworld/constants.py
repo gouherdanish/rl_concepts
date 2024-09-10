@@ -1,7 +1,7 @@
 from enum import Enum
 
 class AgentParams:
-    EPSILON = 0.1       # greedy factor
+    EPSILON = 0.5       # greedy factor
     ALPHA = 0.5         # learning rate
     GAMMA = 0.9         # discount factor
 

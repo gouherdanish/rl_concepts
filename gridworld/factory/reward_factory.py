@@ -3,6 +3,7 @@ import numpy as np
 
 from constants import EnvParams
 from entities.reward import Reward
+from entities.state import State
 
 class RewardFactory:
     registry = {}
@@ -25,14 +26,11 @@ class RewardPolicy(ABC):
     
 @RewardFactory.register_policy('episodic')
 class EpisodicRewardPolicy(RewardPolicy):
-    def __init__(self, states) -> None:
-        self.reward_dist = {state:(Reward(1) if state == EnvParams.GOAL_POS else Reward(0)) for state in states}
-
     def __str__(self) -> str:
-        return f'EpisodicRewardPolicy({self.reward_dist})'
+        return f'EpisodicRewardPolicy()'
     
     def __repr__(self) -> str:
         return str(self)
 
-    def select_reward(self,state):
-        return self.reward_dist[state]
+    def select_reward(self,done):
+        return 1 if done else 0

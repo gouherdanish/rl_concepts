@@ -8,11 +8,21 @@ class Game:
 
     def run(self,episodes=500):
         for episode in range(episodes):
+            print(f"<<<<< EPISODE {episode+1} START >>>>>")
             state = self.env.reset()
             action = self.agent.select_action(state)
+            print(state,action)
             done = False
-            while not done:
+            i = 0
+            while not done :
                 next_state, reward, done = self.env.step(state,action)
                 next_action = self.agent.select_action(next_state)
-                sarsa = (state,action,reward,next_state,next_action)
-                self.agent.update_estimates(**sarsa)
+                sarsa = (state,action.action,reward,next_state,next_action.action)
+                print(sarsa)
+                self.agent.update_estimates(*sarsa)
+                state = next_state
+                action = next_action
+                i += 1
+                if i > 100: done= True
+            print(self.agent.estimates)
+            print(f"<<<<< EPISODE {episode+1} END >>>>>")
