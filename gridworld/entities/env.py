@@ -32,5 +32,5 @@ class GridWorld(Env):
         next_state = action.step_from(state)
         done = True if next_state == self.goal_state else False
         reward = self.reward_policy.select_reward(done=done)
-        print(f'STEPPING TO {next_state} REWARD = {reward} DONE = {done}')
+        # print(f'STEPPING TO {next_state} REWARD = {reward} DONE = {done}')
         return next_state, reward, done
