@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from constants import EnvParams
 from entities.grid import Grid
 from entities.state import State
-from factory.action_factory import ActionSelectionFactory, ActionSelection
+from factory.action_factory import ActionSelection
 from factory.reward_factory import RewardFactory
 
 

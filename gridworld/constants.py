@@ -1,12 +1,13 @@
 from enum import Enum
 
 class AgentParams:
-    EPSILON = 0.9       # greedy factor
     ALPHA = 0.5         # learning rate
     GAMMA = 0.9         # discount factor
+    EPSILON = 0.1       # greedy factor
+    EPSILON_DECAY = 0.9
 
 class EnvParams:
-    GRID_SIZE = (3,3)               # grid size
+    GRID_SIZE = (2,2)               # grid size
     STEP_SIZE = 1                   # agent can step 1 cell up, down, left or right
     REWARD_POLICY = 'episodic'      # agent gets reward at the end of the episode
     GOAL_POS = (2,2)
