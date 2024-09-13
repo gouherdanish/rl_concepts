@@ -24,7 +24,6 @@ class Agent:
         # Exploration
         if np.random.uniform() < self.agent_params.EPSILON:
             action = np.random.choice(list(Actions))
-            # self.agent_params.EPSILON *= self.agent_params.EPSILON_DECAY
         # Exploitation
         else:
             q_state = [(a,q) for (s,a), q in self.estimates.items() if s == state]
