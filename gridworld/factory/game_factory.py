@@ -1,28 +1,23 @@
 from abc import abstractmethod, ABC
 import numpy as np
 
+from entities.agent import Agent
+from entities.env import GridWorld
+from entities.game import Game
+
 class GameFactory:
     registry = {}
 
     @classmethod
-    def register(cls,type):
+    def register(cls,method):
         def inner(wrapped_cls):
-            cls.registry[type] = wrapped_cls
+            cls.registry[method] = wrapped_cls
             return wrapped_cls
         return inner
     
     @classmethod
-    def get(cls,type,**kwargs):
-        return cls.registry[type](**kwargs)
-
-class Game(ABC):
-    def __init__(self,agent,env) -> None:
-        self.agent = agent
-        self.env = env
-
-    @abstractmethod
-    def run(self):
-        pass
+    def get(cls,method,**kwargs):
+        return cls.registry[method](**kwargs)
     
 @GameFactory.register('sarsa')
 class SarsaRL(Game):
