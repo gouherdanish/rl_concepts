@@ -1,3 +1,4 @@
+from abc import abstractmethod, ABC
 from typing import List
 import numpy as np
 
@@ -6,11 +7,22 @@ from entities.state import State
 from entities.qvalue import QValue
 from factory.action_factory import ActionSelectionFactory
 
+class AgentFactory:
+    registry = {}
+
+    @classmethod
+    def register(cls,type):
+        def inner(wrapped_cls):
+            cls.registry[type] = wrapped_cls
+            return wrapped_cls
+        return inner
+    
+    @classmethod
+    def get(cls,type,**kwargs):
+        return cls.registry[type](**kwargs)
+
 class Agent(ABC):
-    def __init__(
-            self,
-            states:List[State],
-            agent_params:AgentParams):
+    def __init__(self,states:List[State],agent_params:AgentParams):
         self.agent_params = agent_params
         self.estimates = {(state,action):QValue(value=0) for state in states for action in list(Actions)}
 
