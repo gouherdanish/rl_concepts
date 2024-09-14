@@ -1,8 +1,3 @@
-from abc import abstractmethod, ABC
-import numpy as np
-
-from entities.agent import Agent
-from entities.env import GridWorld
 from entities.game import Game
 
 class GameFactory:
@@ -37,8 +32,9 @@ class SarsaRL(Game):
             while not done :
                 next_state, reward, done = self.env.step(state,action)
                 next_action = self.agent.select_action(next_state)
-                sarsa = (state,action.action,reward,next_state,next_action.action)
-                self.agent.update_estimates(*sarsa)
+                params = (state,action.action,reward,next_state,next_action.action)
+                print(params)
+                self.agent.update_estimates(*params)
                 state = next_state
                 action = next_action
                 print([(s,a,q) for (s,a), q in self.agent.estimates.items() if q.value != 0])
@@ -61,6 +57,7 @@ class QLearningRL(Game):
                 action = self.agent.select_action(state)
                 next_state, reward, done = self.env.step(state,action)
                 params = (state,action.action,reward,next_state)
+                print(params)
                 self.agent.update_estimates(*params)
                 state = next_state
                 print([(s,a,q) for (s,a), q in self.agent.estimates.items() if q.value != 0])

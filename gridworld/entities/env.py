@@ -13,7 +13,7 @@ class Env(ABC):
         self.grid = Grid(size=env_params.GRID_SIZE)
         self.states = [State(row,col) for row in range(self.grid.nrows) for col in range(self.grid.ncols)]
         self.current_state = State(env_params.INITIAL_POS[0],env_params.INITIAL_POS[1])
-        self.goal_state = State(env_params.GOAL_POS[0]-1,env_params.GOAL_POS[1]-1)
+        self.goal_state = State(env_params.GOAL_POS[0],env_params.GOAL_POS[1])
         self.reward_policy = RewardFactory.get_policy(self.env_params.REWARD_POLICY)
 
     def reset(self):

@@ -27,6 +27,7 @@ class SarsaAgent(Agent):
         """
         qi = self.estimates[(state,action)]
         qi_next = self.estimates[(next_state,next_action)]
+        print(qi_next)
         qi.value += self.agent_params.ALPHA * (reward + self.agent_params.GAMMA * qi_next.value - qi.value)
 
 @AgentFactory.register('qlearning')
@@ -36,8 +37,9 @@ class QLearningAgent(Agent):
         
     def update_estimates(self,state,action,reward,next_state):
         """
-        Implements SARSA Update Policy
+        Implements Q-Learning Update Policy
         """
         qi = self.estimates[(state,action)]
-        qi_next = [q for (s,_), q in self.estimates.items() if s == state]
+        qi_next = [q for (s,_), q in self.estimates.items() if s == next_state]
+        print(f'{next_state}:{qi_next}')
         qi.value += self.agent_params.ALPHA * (reward + self.agent_params.GAMMA * max(qi_next).value - qi.value)
