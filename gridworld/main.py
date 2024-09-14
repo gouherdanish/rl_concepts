@@ -1,9 +1,6 @@
-import sys
 from argparse import ArgumentParser
 
-from entities.agent import Agent
 from entities.env import GridWorld
-from entities.game import Game
 from constants import AgentParams, EnvParams
 from factory.game_factory import GameFactory
 from factory.agent_factory import AgentFactory
