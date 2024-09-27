@@ -5,7 +5,7 @@ from constants import AgentParams, EnvParams
 from factory.game_factory import GameFactory
 from factory.agent_factory import AgentFactory
 
-class RLPipeline:
+class RL_Pipeline:
     def run(method,episodes):
         env = GridWorld(env_params=EnvParams())
         agent = AgentFactory.get(type=method, states=env.states, agent_params=AgentParams())
@@ -19,4 +19,4 @@ if __name__=='__main__':
     arg_parser.add_argument('-n','--episodes', type=int, default=5, help='Number of episodes to run for; Should be a positive integer')
     args = arg_parser.parse_args()
     # Running RL pipeline
-    RLPipeline.run(**vars(args))
+    RL_Pipeline.run(**vars(args))
