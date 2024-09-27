@@ -7,10 +7,10 @@ class AgentParams:
     EPSILON_DECAY = 0.9
 
 class EnvParams:
-    GRID_SIZE = (3,3)               # grid size
+    GRID_SIZE = (2,2)               # grid size
     STEP_SIZE = 1                   # agent can step 1 cell up, down, left or right
     REWARD_POLICY = 'episodic'      # agent gets reward at the end of the episode
-    GOAL_POS = (2,2)
+    GOAL_POS = (1,1)
     INITIAL_POS = (0,0)           
 
 class Actions(Enum):
